@@ -58,6 +58,6 @@ public class PhoneActivity {
         cal.setTime(d);
         String time = Integer.toString(cal.get(Calendar.HOUR_OF_DAY)) + " " + Integer.toString(cal.get(Calendar.MINUTE));
 
-        return this.Activity + ", Confidence: " + this.getConfidence() + ", TimeOfDay: " + time;
+        return this.getActivityAsString() + ", Confidence: " + this.getConfidence() + ", TimeOfDay: " + time;
     }
 }

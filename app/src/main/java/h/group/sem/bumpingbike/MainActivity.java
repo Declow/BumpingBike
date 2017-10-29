@@ -8,12 +8,15 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.ActivityRecognitionClient;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         setContentView(R.layout.activity_main);
 
         client = ActivityRecognition.getClient(this);
+
         Intent intent = new Intent( this, RecService.class );
         PendingIntent.getService( this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT );
 
@@ -53,7 +57,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void onConnected(@Nullable Bundle bundle) {
         Log.v(TAG, "Connected to GoogleApiClient");
 
-        client.requestActivityUpdates(30000, pendingIntent);
+        Intent intent = new Intent(this, RecService.class);
+        pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        client.requestActivityUpdates(3000, pendingIntent);
     }
 
     @Override
@@ -67,7 +73,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         int confidence = (int)i.getExtras().get(StringUtil.CONFIDENCE);
         long time = (long)i.getExtras().get(StringUtil.TIME);
 
-        activites.add(new PhoneActivity(activityType, confidence, time));
+        PhoneActivity pa = new PhoneActivity(activityType, confidence, time);
+
+        activites.add(pa);
+
+        TextView text = findViewById(R.id.Hello);
+        text.setText(pa.toString());
     }
 
     @Override
