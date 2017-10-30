@@ -40,9 +40,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         client = ActivityRecognition.getClient(this);
 
-        Intent intent = new Intent( this, RecService.class );
-        PendingIntent.getService( this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT );
-
         IntentFilter intf = new IntentFilter();
         intf.addAction(StringUtil.INTENT);
 
