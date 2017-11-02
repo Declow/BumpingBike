@@ -7,6 +7,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -27,8 +28,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 public class UploadPositionActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener{
 
-    EditText longitude;
-    EditText latitude;
     Location mLocation;
     DatabaseReference databasePositions;
     GoogleApiClient mGoogleApiClient;
@@ -37,7 +36,6 @@ public class UploadPositionActivity extends AppCompatActivity implements GoogleA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_position);
-        setVariables();
         //Get database reference
         databasePositions = FirebaseDatabase.getInstance().getReference("position");
         //Get google api client
@@ -48,12 +46,8 @@ public class UploadPositionActivity extends AppCompatActivity implements GoogleA
                 .build();
     }
 
-    public void setVariables(){
-        longitude = (EditText)findViewById(R.id.longTxt);
-        latitude = (EditText)findViewById(R.id.latTxt);
-    }
-
     public void handleUpBtn(View view){
+        mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             if (mLocation != null){
                 String id = databasePositions.push().getKey();
                 Position pos = new Position(id, mLocation.getLongitude(), mLocation.getLatitude());
@@ -69,7 +63,6 @@ public class UploadPositionActivity extends AppCompatActivity implements GoogleA
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Toast.makeText(this, "Google API connected...", Toast.LENGTH_LONG).show();
-        mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
     }
 
     @Override

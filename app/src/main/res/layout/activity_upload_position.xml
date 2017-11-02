@@ -9,27 +9,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/longTxt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Longitude" />
-
-        <EditText
-            android:id="@+id/latTxt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Latitude" />
-
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="handleUpBtn"
-            android:text="Upload" />
+            android:text="Upload this position" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
