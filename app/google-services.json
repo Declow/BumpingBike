@@ -1,0 +1,86 @@
+{
+  "project_info": {
+    "project_number": "494135959048",
+    "firebase_url": "https://bumpingbikedb.firebaseio.com",
+    "project_id": "bumpingbikedb",
+    "storage_bucket": "bumpingbikedb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494135959048:android:135d7a6aba6fe902",
+        "android_client_info": {
+          "package_name": "com.bumpinbike.main"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494135959048-phdpb5efpmstedisaulkdhdbuld582hg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkDMGK4QMbBCo9SRjkwmhRnkbnY9UcHK0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494135959048:android:ffc4c19280fa8d12",
+        "android_client_info": {
+          "package_name": "h.group.sem.bumpingbike"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494135959048-7q2paf2c1gpl8s1948kuemb2mgsncrq4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "h.group.sem.bumpingbike",
+            "certificate_hash": "c87a64cb9d1bcaa7bb2fa5e43512722c1feab93e"
+          }
+        },
+        {
+          "client_id": "494135959048-phdpb5efpmstedisaulkdhdbuld582hg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkDMGK4QMbBCo9SRjkwmhRnkbnY9UcHK0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494135959048-phdpb5efpmstedisaulkdhdbuld582hg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
