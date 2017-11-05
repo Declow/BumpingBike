@@ -1,5 +1,7 @@
 package h.group.sem.bumpingbike;
 
+import com.google.android.gms.location.DetectedActivity;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -24,19 +26,19 @@ public class PhoneActivity {
 
     public String getActivityAsString() {
         switch (this.Activity) {
-            case 1:
+            case DetectedActivity.IN_VEHICLE:
                 return "VEHICLE";
-            case 2:
+            case DetectedActivity.ON_BICYCLE:
                 return "BICYCLE";
-            case 3:
+            case DetectedActivity.STILL:
                 return "STILL";
-            case 4:
+            case DetectedActivity.TILTING:
                 return "TILTING";
-            case 5:
+            case DetectedActivity.RUNNING:
                 return "RUNNING";
-            case 6:
+            case DetectedActivity.ON_FOOT:
                 return "ON_FOOT";
-            case 7:
+            case DetectedActivity.WALKING:
                 return "WALKING";
             default:
                 return "UNKNOWN";

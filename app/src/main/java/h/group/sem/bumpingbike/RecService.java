@@ -17,6 +17,8 @@ import com.google.android.gms.location.DetectedActivity;
  */
 public class RecService extends IntentService {
 
+    private static String TAG = "Biking service";
+
     public RecService() {
         super("RecService");
     }
@@ -28,39 +30,20 @@ public class RecService extends IntentService {
             DetectedActivity detectedActivity = activityRecognitionResult.getMostProbableActivity();
 
             int confidence = detectedActivity.getConfidence();
-            int recognizeActivity = getActivityName(detectedActivity.getType());
+            int recognizeActivity = detectedActivity.getType();
 
-            Log.v("Log","Confidence : " + confidence);
-            Log.v("Log","RecognizeActivity : " + recognizeActivity);
+            if (detectedActivity.getType() == DetectedActivity.ON_BICYCLE) {
+                Log.v(TAG, "Activity: Biking");
+                Log.v(TAG,"Confidence : " + confidence);
+                Log.v(TAG,"RecognizeActivity : " + recognizeActivity);
 
-            Intent notify = new Intent(StringUtil.INTENT);
-            notify.putExtra("activity_type", recognizeActivity);
-            notify.putExtra("confidence", confidence);
-            notify.putExtra("time", activityRecognitionResult.getTime());
+                Intent notify = new Intent(StringUtil.INTENT);
+                notify.putExtra("activity_type", recognizeActivity);
+                notify.putExtra("confidence", confidence);
+                notify.putExtra("time", activityRecognitionResult.getTime());
 
-            sendBroadcast(notify);
+                sendBroadcast(notify);
+            }
         }
-    }
-
-    private int getActivityName(int activityType){
-        switch (activityType){
-            case DetectedActivity.IN_VEHICLE:
-                return 1;
-            case DetectedActivity.ON_BICYCLE:
-                return 2;
-            case DetectedActivity.STILL:
-                return 3;
-            case DetectedActivity.TILTING:
-                return 4;
-            case DetectedActivity.RUNNING:
-                return 5;
-            case DetectedActivity.ON_FOOT:
-                return 6;
-            case DetectedActivity.WALKING:
-                return 7;
-            case DetectedActivity.UNKNOWN:
-                return 8;
-        }
-        return 0;
     }
 }
