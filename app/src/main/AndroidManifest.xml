@@ -3,7 +3,7 @@
     package="h.group.sem.bumpingbike">
 
     <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -20,9 +20,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".UploadPositionActivity">
-                <intent-filter>
-                    <action android:name="android.intent.action.DEFAULT" />
-                </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <service
@@ -32,7 +32,12 @@
         <receiver
             android:name=".RecReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
+
+        <activity
+            android:name=".TopBumpsActivity"
+            android:label="@string/title_activity_top_bumps"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

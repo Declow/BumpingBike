@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BumpingBike</string>
+    <string name="title_activity_top_bumps">TopBumpsActivity</string>
 </resources>
