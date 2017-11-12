@@ -24,6 +24,11 @@
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".TopBumpsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".RecService"
@@ -32,12 +37,7 @@
         <receiver
             android:name=".RecReceiver"
             android:enabled="true"
-            android:exported="true" />
-
-        <activity
-            android:name=".TopBumpsActivity"
-            android:label="@string/title_activity_top_bumps"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:exported="true" ></receiver>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
