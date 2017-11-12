@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,11 +34,18 @@ public class TopBumpsActivity extends AppCompatActivity implements GoogleApiClie
     Location mLocation;
     DatabaseReference databasePositions;
     GoogleApiClient mGoogleApiClient;
+    private ProgressBar spinner;
+    View topBumpsView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_bumps);
+
+        topBumpsView = getLayoutInflater().inflate(R.layout.activity_top_bumps, null);
+
+        spinner = (ProgressBar)topBumpsView.findViewById(R.id.progressBar);
+        spinner.setVisibility(View.VISIBLE);
 
         //Get google api client
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -72,6 +80,7 @@ public class TopBumpsActivity extends AppCompatActivity implements GoogleApiClie
 
                         collectPositions((Map<String,Object>) dataSnapshot.getValue());
                         System.out.println("Finished fetching locations");
+                        spinner.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -103,12 +112,9 @@ public class TopBumpsActivity extends AppCompatActivity implements GoogleApiClie
             stringLocations.add("Latitude: " + latitude + " - Longitude: " + longitude);
         }
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(this,
-                R.layout.activity_top_bumps, stringLocations);
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.simple_list_item, stringLocations);
 
-        View mView = getLayoutInflater().inflate(R.layout.activity_top_bumps, null);
-
-        ListView listView = (ListView) mView.findViewById(R.id.topPositions);
+        ListView listView = (ListView) topBumpsView.findViewById(R.id.topPositions);
         listView.setAdapter(adapter);
 
         System.out.println(locations.toString());
