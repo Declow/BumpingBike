@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -45,17 +46,6 @@ public class TopBumpsActivity extends AppCompatActivity implements GoogleApiClie
                 .addApi(LocationServices.API)
                 .build();
 
-        /*
-        // Create a progress bar to display while the list loads
-        ProgressBar progressBar = new ProgressBar(this);
-        progressBar.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
-                ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
-        progressBar.setIndeterminate(true);
-        View mView = getLayoutInflater().inflate(R.layout.activity_top_bumps, null);
-        ListView listView = (ListView) mView.findViewById(R.id.topPositions);
-        listView.setEmptyView(progressBar);
-        */
-
         //Get database reference
         databasePositions = FirebaseDatabase.getInstance().getReference("position");
 
@@ -63,7 +53,25 @@ public class TopBumpsActivity extends AppCompatActivity implements GoogleApiClie
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        /*
+                        // Create a progress bar to display while the list loads
+                        ProgressBar progressBar = new ProgressBar(this);
+                        progressBar.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
+                                ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
+                        progressBar.setIndeterminate(true);
+                        View mView = getLayoutInflater().inflate(R.layout.activity_top_bumps, null);
+                        ListView listView = (ListView) mView.findViewById(R.id.topPositions);
+                        listView.setEmptyView(progressBar);
+
+                        // Must add the progress bar to the root of the layout
+                        ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
+                        root.addView(progressBar);
+                        */
+
+
                         collectPositions((Map<String,Object>) dataSnapshot.getValue());
+                        System.out.println("Finished fetching locations");
                     }
 
                     @Override
@@ -103,7 +111,7 @@ public class TopBumpsActivity extends AppCompatActivity implements GoogleApiClie
         ListView listView = (ListView) mView.findViewById(R.id.topPositions);
         listView.setAdapter(adapter);
 
-        //System.out.println(locations.toString());
+        System.out.println(locations.toString());
     }
 
     @Override
