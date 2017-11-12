@@ -86,7 +86,9 @@ public class TopBumpsActivity extends AppCompatActivity implements GoogleApiClie
         ArrayAdapter adapter = new ArrayAdapter<String>(this,
                 R.layout.activity_top_bumps, stringLocations);
 
-        ListView listView = (ListView) findViewById(R.id.topPositions);
+        View mView = getLayoutInflater().inflate(R.layout.activity_top_bumps, null);
+
+        ListView listView = (ListView) mView.findViewById(R.id.topPositions);
         listView.setAdapter(adapter);
 
         //System.out.println(locations.toString());
