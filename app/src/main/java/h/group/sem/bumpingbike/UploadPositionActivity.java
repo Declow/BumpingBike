@@ -4,10 +4,12 @@ import android.*;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -41,8 +43,9 @@ public class UploadPositionActivity extends AppCompatActivity implements GoogleA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_position);
-        //Ask for location permission
+        //Ask for location permission and enable GPS
         getLocationAcces();
+        enableGPS();
         //Get database reference
         databasePositions = FirebaseDatabase.getInstance().getReference("position");
         //Get google api client
@@ -51,6 +54,20 @@ public class UploadPositionActivity extends AppCompatActivity implements GoogleA
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+    }
+
+    private void enableGPS(){
+        try {
+            int off = Settings.Secure.getInt(getContentResolver(), Settings.Secure.LOCATION_MODE);
+            if (off == 0){
+                Intent onGPS = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(onGPS);
+                Toast.makeText(this, "Please enable GPS to upload positions", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Settings.SettingNotFoundException e) {
+            Toast.makeText(this, "Something went wrong...", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
     }
 
     private void getLocationAcces(){
@@ -93,7 +110,7 @@ public class UploadPositionActivity extends AppCompatActivity implements GoogleA
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Toast.makeText(this, "Google API connected...", Toast.LENGTH_LONG).show();
+
     }
 
     @Override
