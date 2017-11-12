@@ -22,8 +22,10 @@
         android:layout_height="wrap_content"
         android:onClick="handlePosBtn"
         android:text="Position"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="349dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="290dp" />
 
     <Button
         android:id="@+id/topPositions"
@@ -31,7 +33,16 @@
         android:layout_height="wrap_content"
         android:onClick="handleTopPosBtn"
         android:text="Top positions"
-        tools:layout_editor_absoluteX="129dp"
-        tools:layout_editor_absoluteY="427dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="359dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,29 +1,121 @@
 package h.group.sem.bumpingbike;
 
+import android.content.Context;
+import android.location.Location;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
-public class TopBumpsActivity extends AppCompatActivity {
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Map;
+
+public class TopBumpsActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
+
+    Location mLocation;
+    DatabaseReference databasePositions;
+    GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_bumps);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        //Get google api client
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+
+        //Get database reference
+        databasePositions = FirebaseDatabase.getInstance().getReference("position");
+
+        databasePositions.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        collectPositions((Map<String,Object>) dataSnapshot.getValue());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //handle databaseError
+                        //Toast.makeText(this, "Error in getting all locations from Firebase", Toast.LENGTH_LONG).show();
+
+                    }
+                });
+    }
+
+
+    private void collectPositions(Map<String,Object> users) {
+
+        ArrayList<Position> locations = new ArrayList<>();
+        ArrayList<String> stringLocations = new ArrayList<>();
+
+
+        //iterate through each user, ignoring their UID
+        for (Map.Entry<String, Object> entry : users.entrySet()){
+
+            Map singlePosition = (Map) entry.getValue();
+
+            String id = singlePosition.get("id").toString();
+            double latitude = new Double(singlePosition.get("latitude").toString());
+            double longitude = new Double(singlePosition.get("longitude").toString());
+
+            locations.add(new Position( id, latitude, longitude ));
+            stringLocations.add("Latitude: " + latitude + " - Longitude: " + longitude);
+        }
+
+        ArrayAdapter adapter = new ArrayAdapter<String>(this,
+                R.layout.activity_top_bumps, stringLocations);
+
+        ListView listView = (ListView) findViewById(R.id.topPositions);
+        listView.setAdapter(adapter);
+
+        //System.out.println(locations.toString());
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast toast = Toast.makeText(this, "Failed connection", Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    protected void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
     }
 
 }
