@@ -108,4 +108,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         Intent intent = new Intent(MainActivity.this, UploadPositionActivity.class);
         startActivity(intent);
     }
+
+    public void handleTopPosBtn(View view){
+        Intent intent = new Intent(MainActivity.this, TopBumpsActivity.class);
+        startActivity(intent);
+    }
 }
