@@ -13,8 +13,10 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.system.Os;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -23,6 +25,11 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApi;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -31,12 +38,13 @@ import com.google.android.gms.common.api.GoogleApiClient;
  * Created by Morten on 30-10-2017.
  */
 
-public class UploadPositionActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener{
+public class UploadPositionActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, OnMapReadyCallback{
 
     Location mLocation;
     DatabaseReference databasePositions;
     GoogleApiClient mGoogleApiClient;
+    GoogleMap mMap;
     final int LOCATION_REQUEST_CODE = 1;
 
     @Override
@@ -110,7 +118,9 @@ public class UploadPositionActivity extends AppCompatActivity implements GoogleA
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
+        SupportMapFragment mapFragment = (SupportMapFragment)
+                getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -132,5 +142,20 @@ public class UploadPositionActivity extends AppCompatActivity implements GoogleA
     protected void onStop() {
         mGoogleApiClient.disconnect();
         super.onStop();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        Toast toast = Toast.makeText(this, "onMapReady", Toast.LENGTH_LONG);
+        addLocationToMap();
+    }
+
+    private void addLocationToMap(){
+        //Get location
+        mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(mLocation.getLatitude(),
+                mLocation.getLongitude())).title("You are here");
+        mMap.addMarker(markerOptions); 
     }
 }

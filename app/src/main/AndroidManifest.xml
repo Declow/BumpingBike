@@ -33,6 +33,10 @@
             android:name=".RecReceiver"
             android:enabled="true"
             android:exported="true"></receiver>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key"/>
     </application>
 
 </manifest>
