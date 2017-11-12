@@ -61,23 +61,6 @@ public class TopBumpsActivity extends AppCompatActivity implements GoogleApiClie
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        /*
-                        // Create a progress bar to display while the list loads
-                        ProgressBar progressBar = new ProgressBar(this);
-                        progressBar.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
-                                ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
-                        progressBar.setIndeterminate(true);
-                        View mView = getLayoutInflater().inflate(R.layout.activity_top_bumps, null);
-                        ListView listView = (ListView) mView.findViewById(R.id.topPositions);
-                        listView.setEmptyView(progressBar);
-
-                        // Must add the progress bar to the root of the layout
-                        ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
-                        root.addView(progressBar);
-                        */
-
-
                         collectPositions((Map<String,Object>) dataSnapshot.getValue());
                         System.out.println("Finished fetching locations");
                         spinner.setVisibility(View.GONE);
@@ -86,8 +69,6 @@ public class TopBumpsActivity extends AppCompatActivity implements GoogleApiClie
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         //handle databaseError
-                        //Toast.makeText(this, "Error in getting all locations from Firebase", Toast.LENGTH_LONG).show();
-
                     }
                 });
     }
@@ -98,8 +79,6 @@ public class TopBumpsActivity extends AppCompatActivity implements GoogleApiClie
         ArrayList<Position> locations = new ArrayList<>();
         ArrayList<String> stringLocations = new ArrayList<>();
 
-
-        //iterate through each user, ignoring their UID
         for (Map.Entry<String, Object> entry : users.entrySet()){
 
             Map singlePosition = (Map) entry.getValue();
