@@ -11,6 +11,7 @@ public class Position {
     double longitude, latitude;
     String id;
     String timeStamp;
+    int count;
 
     public Position(){
         this.timeStamp = new Date().toString();
@@ -34,4 +35,8 @@ public class Position {
     public String getId() {
         return id;
     }
+
+    public int getCount() { return count; }
+
+    public void increaseCount() { count++; }
 }
