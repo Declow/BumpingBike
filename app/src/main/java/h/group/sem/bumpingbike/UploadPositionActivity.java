@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApi;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -46,6 +47,7 @@ public class UploadPositionActivity extends FragmentActivity implements GoogleAp
     GoogleApiClient mGoogleApiClient;
     GoogleMap mMap;
     final int LOCATION_REQUEST_CODE = 1;
+    private float zoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class UploadPositionActivity extends FragmentActivity implements GoogleAp
         //Ask for location permission and enable GPS
         getLocationAcces();
         enableGPS();
+        zoom = 15.0f;
         //Get database reference
         databasePositions = FirebaseDatabase.getInstance().getReference("position");
         //Get google api client
@@ -154,6 +157,9 @@ public class UploadPositionActivity extends FragmentActivity implements GoogleAp
     private void addLocationToMap(){
         //Get location
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        LatLng pos = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, zoom));
+
         MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(mLocation.getLatitude(),
                 mLocation.getLongitude())).title("You are here");
         mMap.addMarker(markerOptions); 
