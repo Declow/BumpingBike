@@ -56,7 +56,7 @@ public class UploadPositionActivity extends FragmentActivity implements GoogleAp
         //Ask for location permission and enable GPS
         getLocationAcces();
         enableGPS();
-        zoom = 15.0f;
+        zoom = 15.0f;   //Zoom factor between 2-21
         //Get database reference
         databasePositions = FirebaseDatabase.getInstance().getReference("position");
         //Get google api client
@@ -67,6 +67,9 @@ public class UploadPositionActivity extends FragmentActivity implements GoogleAp
                 .build();
     }
 
+    /**
+     * Sends user to enable GPS if not enabled
+     */
     private void enableGPS(){
         try {
             int off = Settings.Secure.getInt(getContentResolver(), Settings.Secure.LOCATION_MODE);
@@ -81,6 +84,9 @@ public class UploadPositionActivity extends FragmentActivity implements GoogleAp
         }
     }
 
+    /**
+     * Request location acces
+     */
     private void getLocationAcces(){
         //Checking if the user has granted location permission for this app
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -157,9 +163,10 @@ public class UploadPositionActivity extends FragmentActivity implements GoogleAp
     private void addLocationToMap(){
         //Get location
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        //Set zoom 
         LatLng pos = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, zoom));
-
+        //Add marker to map
         MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(mLocation.getLatitude(),
                 mLocation.getLongitude())).title("You are here");
         mMap.addMarker(markerOptions); 
