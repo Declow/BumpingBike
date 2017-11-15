@@ -1,6 +1,8 @@
 package h.group.sem.bumpingbike;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -86,7 +88,8 @@ public class TopBumpsActivity extends Activity implements GoogleApiClient.Connec
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 TextView sel = (TextView) arg1;
                 String selectedItem = sel.getText().toString();
-/*
+
+                /*
                 new AlertDialog.Builder(StrListActivity.this)
                         .setTitle("Selection Information")
                         .setMessage("You have selected " + selectedItem)
@@ -105,7 +108,7 @@ public class TopBumpsActivity extends Activity implements GoogleApiClient.Connec
     private void collectPositions(Map<String,Object> users, ArrayAdapter<String> adapter) {
 
         ArrayList<Position> locations = new ArrayList<>();
-
+        double range = 1; // meters
 
         for (Map.Entry<String, Object> entry : users.entrySet()){
 
@@ -116,23 +119,30 @@ public class TopBumpsActivity extends Activity implements GoogleApiClient.Connec
             double longitude = new Double(singlePosition.get("longitude").toString());
 
             Position position = new Position( id, latitude, longitude );
+            boolean foundInRange = false;
 
             for (int i = 0; i<locations.size();i++) {
-                Position currentPos = locations.get(i);
-                if(currentPos.getId()==position.getId())
-                    continue;
-                double dist = calculateDistance(position.latitude, position.longitude, currentPos.latitude, currentPos.longitude);
+                Position checkInRangePosition = locations.get(i);
+                double dist = calculateDistance(position.latitude, position.longitude, checkInRangePosition.latitude, checkInRangePosition.longitude);
+                if (dist <= range) {
+                    checkInRangePosition.PositionsFoundInRange(position);
+                    foundInRange = true;
+                }
             }
-
-            locations.add(position);
+            if (!foundInRange)
+                locations.add(position);
         }
 
         for (Position position: locations) {
+            // +1 for the current position itself
+            // position.getCountPositionsInRange() only counts the locations that where found with distance <= range, the position itself will be missing
+            int totalCount = position.getCountPositionsInRange() + 1;
             String value = "";
             value += "Latitude: " + position.latitude;
             value += "\n";
             value += "Longitude: " + position.longitude;
             value += "\n";
+            value += "Count: " + totalCount;
             adapter.add(value);
         }
 
@@ -140,20 +150,26 @@ public class TopBumpsActivity extends Activity implements GoogleApiClient.Connec
     }
 
     public double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-        // https://www.movable-type.co.uk/scripts/latlong.html
+        // https://stackoverflow.com/questions/3694380/calculating-distance-between-two-points-using-latitude-longitude-what-am-i-doi
 
-        double R = 6371e3; // metres
+        final int R = 6371; // Radius of the earth
 
-        double phi1 = toRadians(lat1);
-        double phi2 = toRadians(lat2);
-        double delta_phi = toRadians(lat2-lat1);
-        double delta_lambda = toRadians(lon2-lon1);
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c * 1000; // convert to meters
 
-        double a = Math.sin(delta_phi/2) * Math.sin(delta_phi/2) +
-                Math.cos(phi1) * Math.cos(phi2) * Math.sin(delta_lambda/2) * Math.sin(delta_lambda/2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        // We don't care about the change in height for this calculation so we set the altitude as 0 for both
+        double al1 = 0; // meters
+        double al2 = 0; // meters
+        double height = al1 - al2;
 
-        return R * c;
+        distance = Math.pow(distance, 2) + Math.pow(height, 2);
+
+        return Math.sqrt(distance);
     }
 
     @Override
