@@ -18,11 +18,26 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
-        <Button
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="handleUpBtn"
-            android:text="Upload this position" />
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/upPosBtn"
+                android:onClick="handleUpBtn"
+                android:text="Upload position" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/showPosBtn"
+                android:onClick="handleShowPosBtn"
+                android:text="Show position" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

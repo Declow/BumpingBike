@@ -124,6 +124,10 @@ public class UploadPositionActivity extends FragmentActivity implements GoogleAp
             }
     }
 
+    public void handleShowPosBtn(View view){
+       addLocationToMap();
+    }
+
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -163,6 +167,10 @@ public class UploadPositionActivity extends FragmentActivity implements GoogleAp
     private void addLocationToMap(){
         //Get location
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLocation == null){
+            Toast toast = Toast.makeText(this, "No last known location...", Toast.LENGTH_LONG);
+            return;
+        }
         //Set zoom 
         LatLng pos = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, zoom));
