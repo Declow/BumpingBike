@@ -43,7 +43,6 @@ public class SignIn extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         startMainActivity(currentUser);
-        finish();
     }
 
     private void createAccount(String email, String password) {
@@ -60,7 +59,6 @@ public class SignIn extends AppCompatActivity {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             startMainActivity(user);
-                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -76,6 +74,7 @@ public class SignIn extends AppCompatActivity {
         if (user != null) {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
+            finish();
         }
     }
 
