@@ -3,6 +3,7 @@ package h.group.sem.bumpingbike;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -41,6 +42,7 @@ public class TopBumpsActivity extends Activity implements GoogleApiClient.Connec
     private ProgressBar progressBar;
     View topBumpsView;
     ArrayAdapter<String> adapter;
+    ArrayList<Position> locations;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,7 +109,7 @@ public class TopBumpsActivity extends Activity implements GoogleApiClient.Connec
 
     private void collectPositions(Map<String,Object> users, ArrayAdapter<String> adapter) {
 
-        ArrayList<Position> locations = new ArrayList<>();
+        locations = new ArrayList<>();
         double range = 1; // meters
 
         for (Map.Entry<String, Object> entry : users.entrySet()){
@@ -196,6 +198,16 @@ public class TopBumpsActivity extends Activity implements GoogleApiClient.Connec
     protected void onStop() {
         mGoogleApiClient.disconnect();
         super.onStop();
+    }
+
+    /**
+     * Passes all fetced positions to ShowTopBumpsActivity for displaying
+     * @param view
+     */
+    public void handleShowPosBtn(View view){
+        Intent intent = new Intent(TopBumpsActivity.this, ShowTopBumpsActivity.class);
+        intent.putExtra("positions", locations);
+        startActivity(intent);
     }
 
 }

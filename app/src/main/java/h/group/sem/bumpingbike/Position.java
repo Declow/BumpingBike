@@ -1,5 +1,6 @@
 package h.group.sem.bumpingbike;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +10,7 @@ import java.util.List;
  * Created by Morten on 30-10-2017.
  */
 
-public class Position {
+public class Position implements Serializable{
 
     double longitude, latitude;
     String id;
