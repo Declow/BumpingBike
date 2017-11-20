@@ -26,15 +26,15 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/upPosBtn"
-                android:onClick="handleUpBtn"
-                android:text="Upload position" />
+                android:id="@+id/showPosBtn"
+                android:onClick="handleShowPosBtn"
+                android:text="@string/show_position_button" />
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/showPosBtn"
-                android:onClick="handleShowPosBtn"
-                android:text="Show position" />
+                android:id="@+id/upPosBtn"
+                android:onClick="handleUpBtn"
+                android:text="@string/upload_position_button" />
 
         </LinearLayout>
 

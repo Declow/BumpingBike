@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:onClick="handlePosBtn"
-        android:text="Position"
+        android:text="@string/show_and_upload_position_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="53dp"
         android:onClick="handleTopPosBtn"
-        android:text="Get positions in database"
+        android:text="@string/database_positions_button"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

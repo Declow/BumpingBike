@@ -55,6 +55,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="handleShowPosBtn"
-        android:text="Show positions on map" />
+        android:text="@string/show_positions_on_map_button" />
 
 </LinearLayout>

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BumpingBike</string>
+    <string name="show_position_button">Show position</string>
+    <string name="upload_position_button">Upload position</string>
+    <string name="show_positions_on_map_button">Show positions on map</string>
+    <string name="database_positions_button">Get positions in database</string>
+    <string name="show_and_upload_position_button">Show and upload position</string>
 </resources>

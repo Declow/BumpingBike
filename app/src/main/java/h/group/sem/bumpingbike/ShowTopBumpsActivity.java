@@ -82,7 +82,7 @@ public class ShowTopBumpsActivity extends FragmentActivity implements GoogleApiC
             markerOption = new MarkerOptions().position(pos).title("Bump");
             mMap.addMarker(markerOption);
         }
-        //Set zoom to latest position, if any
+        //Set zoom to last position, if any
         if (pos != null){
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, zoomFactor));
         }
