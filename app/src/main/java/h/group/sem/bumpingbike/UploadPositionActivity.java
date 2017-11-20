@@ -112,10 +112,10 @@ public class UploadPositionActivity extends FragmentActivity implements GoogleAp
     }
 
     public void handleUpBtn(View view){
-        mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        addLocationToMap();
             if (mLocation != null){
                 String id = databasePositions.push().getKey();
-                Position pos = new Position(id, mLocation.getLongitude(), mLocation.getLatitude());
+                Position pos = new Position(id, mLocation.getLatitude(), mLocation.getLongitude());
 
                 databasePositions.child(id).setValue(pos);
                 Toast.makeText(this, "Position added", Toast.LENGTH_LONG).show();
@@ -127,7 +127,6 @@ public class UploadPositionActivity extends FragmentActivity implements GoogleAp
     public void handleShowPosBtn(View view){
        addLocationToMap();
     }
-
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {

@@ -77,8 +77,7 @@ public class ShowTopBumpsActivity extends FragmentActivity implements GoogleApiC
         LatLng pos = null;
         MarkerOptions markerOption = null;
         for (Position p : locations){
-            //Soooo... Apparently sometimes longitude and latitude should be switched, for locations to be correct
-            pos = new LatLng(p.getLongitude(), p.getLatitude());
+            pos = new LatLng(p.getLatitude(), p.getLongitude());
             markerOption = new MarkerOptions().position(pos).title("Bump");
             mMap.addMarker(markerOption);
         }
