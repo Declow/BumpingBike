@@ -65,7 +65,7 @@ public class TopBumpsActivity extends Activity implements GoogleApiClient.Connec
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 
         //Get database reference
-        databasePositions = FirebaseDatabase.getInstance().getReference("position");
+        databasePositions = FirebaseDatabase.getInstance().getReference(StringUtil.POSITION);
 
         databasePositions.addListenerForSingleValueEvent(
                 new ValueEventListener() {
@@ -211,48 +211,3 @@ public class TopBumpsActivity extends Activity implements GoogleApiClient.Connec
     }
 
 }
-
-
-/*
-
-public class TopBumpsActivity extends Activity implements GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_top_bumps);
-
-        topBumpsView = getLayoutInflater().inflate(R.layout.activity_top_bumps, null);
-
-        spinner = (ProgressBar)topBumpsView.findViewById(R.id.progressBar);
-        spinner.setVisibility(View.VISIBLE);
-
-
-
-        //Get database reference
-        databasePositions = FirebaseDatabase.getInstance().getReference("position");
-
-        databasePositions.addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        collectPositions((Map<String,Object>) dataSnapshot.getValue());
-                        System.out.println("Finished fetching locations");
-                        spinner.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        //handle databaseError
-                    }
-                });
-    }
-
-
-
-
-
-
-}
-*/

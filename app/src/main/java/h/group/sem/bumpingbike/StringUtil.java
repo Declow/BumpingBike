@@ -10,4 +10,7 @@ public interface StringUtil {
     String ACTIVITY_TYPE = "activity_type";
     String CONFIDENCE = "confidence";
     String TIME = "time";
+
+    String POSITION = "position";
+    String USERS = "users";
 }

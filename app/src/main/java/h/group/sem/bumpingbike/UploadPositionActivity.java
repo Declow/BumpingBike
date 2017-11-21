@@ -31,6 +31,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -43,7 +44,7 @@ public class UploadPositionActivity extends FragmentActivity implements GoogleAp
         GoogleApiClient.OnConnectionFailedListener, OnMapReadyCallback{
 
     Location mLocation;
-    DatabaseReference databasePositions;
+    DatabaseReference database;
     GoogleApiClient mGoogleApiClient;
     GoogleMap mMap;
     final int LOCATION_REQUEST_CODE = 1;
@@ -58,7 +59,8 @@ public class UploadPositionActivity extends FragmentActivity implements GoogleAp
         enableGPS();
         zoom = 15.0f;   //Zoom factor between 2-21
         //Get database reference
-        databasePositions = FirebaseDatabase.getInstance().getReference("position");
+        database = FirebaseDatabase.getInstance().getReference();
+
         //Get google api client
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -114,10 +116,18 @@ public class UploadPositionActivity extends FragmentActivity implements GoogleAp
     public void handleUpBtn(View view){
         addLocationToMap();
             if (mLocation != null){
-                String id = databasePositions.push().getKey();
+                String id = database.child(StringUtil.POSITION).push().getKey();
                 Position pos = new Position(id, mLocation.getLatitude(), mLocation.getLongitude());
 
-                databasePositions.child(id).setValue(pos);
+                database.child(StringUtil.POSITION).child(id).setValue(pos);
+
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                String UId = mAuth.getCurrentUser().getUid();
+
+                String userId = database.child(StringUtil.USERS).child(UId).push().getKey();
+                database.child(StringUtil.USERS).child(UId).child(userId).setValue(id);
+
+
                 Toast.makeText(this, "Position added", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, "No last location", Toast.LENGTH_LONG).show();
