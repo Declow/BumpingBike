@@ -13,4 +13,5 @@ public interface StringUtil {
 
     String POSITION = "position";
     String USERS = "users";
+    String ROUTE = "route";
 }

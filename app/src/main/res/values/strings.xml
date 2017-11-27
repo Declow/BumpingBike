@@ -5,4 +5,6 @@
     <string name="show_positions_on_map_button">Show positions on map</string>
     <string name="database_positions_button">Get positions in database</string>
     <string name="show_and_upload_position_button">Show and upload position</string>
+    <string name="title_activity_biking">Biking</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>
