@@ -15,9 +15,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+
+import h.group.sem.bumpingbike.Models.Position;
 
 /**
  * Created by Morten on 19-11-2017.

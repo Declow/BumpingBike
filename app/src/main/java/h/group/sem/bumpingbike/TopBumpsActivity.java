@@ -1,8 +1,6 @@
 package h.group.sem.bumpingbike;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -28,7 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static java.lang.Math.toRadians;
+import h.group.sem.bumpingbike.Models.Position;
+import h.group.sem.bumpingbike.Utils.StringUtil;
 
 // CustomAdapter
 // https://stackoverflow.com/questions/15832335/android-custom-row-item-for-listview
@@ -125,7 +124,7 @@ public class TopBumpsActivity extends Activity implements GoogleApiClient.Connec
 
             for (int i = 0; i<locations.size();i++) {
                 Position checkInRangePosition = locations.get(i);
-                double dist = calculateDistance(position.latitude, position.longitude, checkInRangePosition.latitude, checkInRangePosition.longitude);
+                double dist = calculateDistance(position.getLatitude(), position.getLongitude(), checkInRangePosition.getLatitude(), checkInRangePosition.getLongitude());
                 if (dist <= range) {
                     checkInRangePosition.PositionsFoundInRange(position);
                     foundInRange = true;
@@ -140,9 +139,9 @@ public class TopBumpsActivity extends Activity implements GoogleApiClient.Connec
             // position.getCountPositionsInRange() only counts the locations that where found with distance <= range, the position itself will be missing
             int totalCount = position.getCountPositionsInRange() + 1;
             String value = "";
-            value += "Latitude: " + position.latitude;
+            value += "Latitude: " + position.getLatitude();
             value += "\n";
-            value += "Longitude: " + position.longitude;
+            value += "Longitude: " + position.getLongitude();
             value += "\n";
             value += "Count: " + totalCount;
             adapter.add(value);

@@ -33,11 +33,11 @@
         </activity>
 
         <service
-            android:name=".RecService"
+            android:name=".Utils.RecService"
             android:exported="false" />
 
         <receiver
-            android:name=".RecReceiver"
+            android:name=".Utils.RecReceiver"
             android:enabled="true"
             android:exported="true" />
 

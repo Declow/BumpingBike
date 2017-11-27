@@ -1,8 +1,7 @@
-package h.group.sem.bumpingbike;
+package h.group.sem.bumpingbike.Utils;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.content.Context;
 import android.util.Log;
 
 import com.google.android.gms.location.ActivityRecognitionResult;

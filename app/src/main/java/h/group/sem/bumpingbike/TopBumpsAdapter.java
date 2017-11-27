@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import h.group.sem.bumpingbike.Models.Position;
+
 /**
  * Created by maria on 13/11/2017.
  */

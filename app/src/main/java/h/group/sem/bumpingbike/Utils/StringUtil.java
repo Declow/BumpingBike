@@ -1,4 +1,4 @@
-package h.group.sem.bumpingbike;
+package h.group.sem.bumpingbike.Utils;
 
 /**
  * Created by ditlev on 10/26/17.

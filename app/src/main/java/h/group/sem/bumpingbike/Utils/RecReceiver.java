@@ -1,8 +1,10 @@
-package h.group.sem.bumpingbike;
+package h.group.sem.bumpingbike.Utils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import h.group.sem.bumpingbike.Utils.IRec;
 
 public class RecReceiver extends BroadcastReceiver {
 

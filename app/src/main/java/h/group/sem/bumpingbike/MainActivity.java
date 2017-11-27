@@ -17,10 +17,13 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.ActivityRecognitionClient;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import h.group.sem.bumpingbike.Utils.IRec;
+import h.group.sem.bumpingbike.Utils.RecReceiver;
+import h.group.sem.bumpingbike.Utils.RecService;
+import h.group.sem.bumpingbike.Utils.StringUtil;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks
         , GoogleApiClient.OnConnectionFailedListener

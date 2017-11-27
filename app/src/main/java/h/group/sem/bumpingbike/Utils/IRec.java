@@ -1,4 +1,4 @@
-package h.group.sem.bumpingbike;
+package h.group.sem.bumpingbike.Utils;
 
 import android.content.Intent;
 
