@@ -1,5 +1,6 @@
 package h.group.sem.bumpingbike.Models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Date;
  * Class created to upload acceleometer data
  */
 
-public class AccelData {
+public class AccelData implements Serializable {
 
     private float x,y,z;
     private Date date;
@@ -17,6 +18,34 @@ public class AccelData {
         this.y = y;
         this.z = z;
         date = new Date();
+    }
+
+    public void setX(int x){
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setZ(int z) {
+        this.z = z;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public float getZ() {
+        return z;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     @Override

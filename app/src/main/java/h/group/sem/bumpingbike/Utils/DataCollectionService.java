@@ -2,6 +2,8 @@ package h.group.sem.bumpingbike.Utils;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -22,22 +24,45 @@ public class DataCollectionService extends IntentService implements SensorEventL
     private SensorManager sensorManager;
     private static String TAG = "DATA_COLLECTION_SERVICE";
     private ArrayList<AccelData> data;
-    DatabaseReference database;
+    private DatabaseReference database;
+    private DataReceiver receiver;
 
-    public DataCollectionService(String name) {
-        super(name);
+    public DataCollectionService() {
+        super(TAG);
+    }
+
+    @Override
+    public int onStartCommand(Intent i, int flags, int startId) {
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
 
         data = new ArrayList<>();
         database = FirebaseDatabase.getInstance().getReference();
+        receiver = new DataReceiver(this);
+
+        IntentFilter inf = new IntentFilter();
+        inf.addAction("StopDataCollection");
+
+        registerReceiver(receiver, inf);
+
+        return START_STICKY;
     }
 
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
+    protected void onHandleIntent(Intent intent) {
         if (intent != null) {
+            //Should we do anything here?
         }
+    }
+
+    public void stopService() {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String UId = mAuth.getCurrentUser().getUid();
+
+        String id = database.child(StringUtil.USERS).child(UId).child(StringUtil.ROUTE).push().getKey();
+        database.child(StringUtil.USERS).child(UId).child(StringUtil.ROUTE).child(id).setValue(data);
+        onDestroy();
     }
 
     @Override
@@ -49,15 +74,13 @@ public class DataCollectionService extends IntentService implements SensorEventL
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
-
     }
+
+
 
     @Override
     public void onDestroy() {
+        unregisterReceiver(receiver);
         sensorManager.unregisterListener(this);
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        String UId = mAuth.getCurrentUser().getUid();
-        String id = database.child(StringUtil.USERS).child(UId).child(StringUtil.ROUTE).push().getKey();
-        database.child(StringUtil.USERS).child(UId).child(StringUtil.ROUTE).child(id).setValue(data);
     }
 }

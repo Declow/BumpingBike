@@ -37,6 +37,10 @@ public class Biking extends AppCompatActivity {
     }
 
     public void stopBiking(View v) {
-        stopService(new Intent(this, DataCollectionService.class));
+        Intent i = new Intent("StopDataCollection");
+        sendBroadcast(i);
+
+
+        //stopService(new Intent(this, DataCollectionService.class));
     }
 }
