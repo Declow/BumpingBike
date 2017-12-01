@@ -26,6 +26,7 @@ public class DataCollectionService extends IntentService implements SensorEventL
     private ArrayList<AccelData> data;
     private DatabaseReference database;
     private DataReceiver receiver;
+    private long startTime;
 
     public DataCollectionService() {
         super(TAG);
@@ -45,6 +46,8 @@ public class DataCollectionService extends IntentService implements SensorEventL
         inf.addAction("StopDataCollection");
 
         registerReceiver(receiver, inf);
+
+        startTime = System.currentTimeMillis();
 
         return START_STICKY;
     }
@@ -67,7 +70,7 @@ public class DataCollectionService extends IntentService implements SensorEventL
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        AccelData d = new AccelData(sensorEvent.values[0], sensorEvent.values[1], sensorEvent.values[2]);
+        AccelData d = new AccelData(sensorEvent.values[0], sensorEvent.values[1], sensorEvent.values[2], startTime);
         Log.v(TAG, d.toString());
         data.add(d);
     }
