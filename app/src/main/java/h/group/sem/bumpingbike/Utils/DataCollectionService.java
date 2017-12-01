@@ -63,8 +63,8 @@ public class DataCollectionService extends IntentService implements SensorEventL
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String UId = mAuth.getCurrentUser().getUid();
 
-        String id = database.child(StringUtil.USERS).child(UId).child(StringUtil.ROUTE).push().getKey();
-        database.child(StringUtil.USERS).child(UId).child(StringUtil.ROUTE).child(id).setValue(data);
+        String id = database.child(StringUtil.ROUTE).child(UId).push().getKey();
+        database.child(StringUtil.ROUTE).child(UId).child(id).setValue(data);
         onDestroy();
     }
 

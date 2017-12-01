@@ -11,13 +11,13 @@ import java.util.Date;
 public class AccelData implements Serializable {
 
     private float x,y,z;
-    private long timeStamp;
+    private long timeStampInMS;
 
     public AccelData(float x, float y, float z, long startTime) {
         this.x = x;
         this.y = y;
         this.z = z;
-        timeStamp = (System.currentTimeMillis() - startTime) / 1000;
+        timeStampInMS = (System.currentTimeMillis() - startTime);
     }
 
     public void setX(int x){
@@ -32,7 +32,7 @@ public class AccelData implements Serializable {
         this.z = z;
     }
 
-    public void setTimeStamp(long timeStamp) { this.timeStamp = timeStamp; }
+    public void setTimeStampInMS(long timeStamp) { this.timeStampInMS = timeStamp; }
 
     public float getX() {
         return x;
@@ -46,12 +46,12 @@ public class AccelData implements Serializable {
         return z;
     }
 
-    public long getTimeStamp() {
-        return timeStamp;
+    public long getTimeStampInMS() {
+        return timeStampInMS;
     }
 
     @Override
     public String toString() {
-        return "X: " + x + " y: " + y + " z:" + z + " time: " + timeStamp;
+        return "X: " + x + " y: " + y + " z:" + z + " time: " + timeStampInMS;
     }
 }
