@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import h.group.sem.bumpingbike.Utils.IRec;
-
 public class RecReceiver extends BroadcastReceiver {
 
     IRec rec;
@@ -17,6 +15,6 @@ public class RecReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        rec.InsertActivity(intent);
+        rec.command(intent);
     }
 }

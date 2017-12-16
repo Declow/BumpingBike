@@ -7,5 +7,5 @@ import android.content.Intent;
  */
 
 public interface IRec {
-    void InsertActivity(Intent i);
+    void command(Intent i);
 }

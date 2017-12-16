@@ -117,8 +117,8 @@ public class UploadPositionActivity extends FragmentActivity implements GoogleAp
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 String UId = mAuth.getCurrentUser().getUid();
 
-                String userId = database.child(StringUtil.USERS).child(UId).child(StringUtil.POSITION).push().getKey();
-                database.child(StringUtil.USERS).child(UId).child(StringUtil.POSITION).child(userId).setValue(id);
+                String posId = database.child(StringUtil.USERS).child(UId).child(StringUtil.POSITION).push().getKey();
+                database.child(StringUtil.USERS).child(UId).child(StringUtil.POSITION).child(posId).setValue(id);
 
                 Toast.makeText(this, "Position added", Toast.LENGTH_LONG).show();
             } else {

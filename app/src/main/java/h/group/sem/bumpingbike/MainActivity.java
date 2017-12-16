@@ -1,10 +1,13 @@
 package h.group.sem.bumpingbike;
 
+import android.*;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,7 +38,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private GoogleApiClient googleApiClient;
     private ActivityRecognitionClient client;
     private RecReceiver receiver;
-    private List<PhoneActivity> activites;
+    private final int LOCATION_REQUEST_CODE = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +53,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         receiver = new RecReceiver(this);
         this.registerReceiver(receiver, intf);
-        activites = new ArrayList<>();
-
-        start();
     }
 
     @Override
@@ -69,14 +70,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     @Override
-    public void InsertActivity(Intent i) {
+    public void command(Intent i) {
         int activityType = (int)i.getExtras().get(StringUtil.ACTIVITY_TYPE);
         int confidence = (int)i.getExtras().get(StringUtil.CONFIDENCE);
         long time = (long)i.getExtras().get(StringUtil.TIME);
 
         PhoneActivity pa = new PhoneActivity(activityType, confidence, time);
-
-        activites.add(pa);
 
         TextView text = findViewById(R.id.Hello);
         text.setText(pa.toString());
@@ -90,7 +89,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         toast.show();
     }
 
-    private void start() {
+    @Override
+    protected void onStart() {
+        super.onStart();
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(ActivityRecognition.API)
                 .addConnectionCallbacks(this) //this is refer to connectionCallbacks interface implementation.
@@ -98,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 .build();
 
         googleApiClient.connect();
+
+        getLocationAcces();
     }
 
     @Override
@@ -120,5 +123,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void startBikingActivity(View view) {
         Intent i = new Intent(this, Biking.class);
         startActivity(i);
+    }
+
+    /**
+     * Request location acces
+     */
+    private void getLocationAcces(){
+        //Checking if the user has granted location permission for this app
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+        }
+
     }
 }

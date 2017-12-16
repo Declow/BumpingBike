@@ -6,10 +6,13 @@ package h.group.sem.bumpingbike.Utils;
 
 public interface StringUtil {
     String INTENT = "h.group.sem";
+    String STOP_SERVICE = "StopDataCollection";
+    String LOAD_ROUTE = "LoadRoute";
 
     String ACTIVITY_TYPE = "activity_type";
     String CONFIDENCE = "confidence";
     String TIME = "time";
+    String POSITIONS = "pos";
 
     String POSITION = "position";
     String USERS = "users";

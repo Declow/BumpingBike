@@ -13,7 +13,7 @@ public class DataReceiver extends BroadcastReceiver {
     }
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().equals("StopDataCollection")) {
+        if (intent.getAction().equals(StringUtil.STOP_SERVICE)) {
             d.stopService();
         }
     }
