@@ -14,6 +14,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
@@ -50,6 +51,8 @@ public class DataCollectionService extends IntentService implements SensorEventL
     private final int THRESHOLD = 15;
     private boolean added = false;
     private long startTime;
+    private PowerManager powerManager;
+    private PowerManager.WakeLock lock;
 
     public DataCollectionService() {
         super(TAG);
@@ -79,6 +82,10 @@ public class DataCollectionService extends IntentService implements SensorEventL
         inf.addAction(StringUtil.STOP_SERVICE);
 
         registerReceiver(receiver, inf);
+
+        powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        lock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakeLock");
+        lock.acquire();
 
         startTime = System.currentTimeMillis();
 
@@ -170,6 +177,7 @@ public class DataCollectionService extends IntentService implements SensorEventL
     public void onDestroy() {
         unregisterReceiver(receiver);
         sensorManager.unregisterListener(this);
+        lock.release();
     }
 
     private void enableGPS(){
